@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Hugo 0.101.0">
+  <title>Sign Up Template</title>
+  <!-- CDN Bootstrap 5.2.0 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta name="google-signin-client_id"
+        content="1051803384347-91967jipju1ume5ul4dcr5g84bfaja56.apps.googleusercontent.com">
+  <!-- Custom styles for this template -->
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <main>
+    <section class="sign-up">
+
+      <form>
+        <div>
+          <h1>Let's get started</h1>
+          <p>register with your email password.</p>
+          <p>already have an account? <a href="index.html">Login in</a></p>
+        </div>
+        <input type="text" id="username" name="username" required placeholder="Username">
+        <input type="email" id="email" name="email" required placeholder="Email">
+        <input type="password" id="password" name="password" required placeholder="Password">
+        <input type="text" id="age" name="age" required placeholder="age">
+        <input type="text" id="address" name="address" required placeholder="address">
+        <button type="button" onclick="signup();">Sign Up</button>
+        <div> <br><div class="demo"></div>
+        <hr class="w-80"><div id="google-signin-button" class="g-signin2 gbutton" data-onsuccess="onSignIn"></div> </div>
+      </form>
+    </section>
+  </main>
+  <!-- CDN Bootstrap Bundle 5.0.2 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</body>
+</html>
+<script>
+  async function onSignIn(googleUser) {
+        // Handle the Google user object (googleUser)
+        var profile = googleUser.getBasicProfile();
+        var authResponse = googleUser.getAuthResponse();
+        var idToken = authResponse.id_token;
+        console.log('idToken',idToken);
+        console.log('ID: ' + profile.getId());
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+
+        try {
+        // Make AJAX request
+        const response = await fetch('http://localhost:4000/loginWithGoogle', {
+            method: 'GET',
+            headers : {
+                'Authorization' : `Bearer ${idToken}`
+            }
+        })
+        const data = await response.json();
+        console.log('data', data);
+        if(data.success){
+          localStorage.setItem('token',data.token)
+          setTimeout(function() {
+            window.location.href = 'dashboard.html';
+          }, 2000); 
+        }else{
+          alert(data.message);
+        }
+    } catch (error) {
+        console.log('something went wrong');
+    }
+    }
+
+    async function signup() {
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        console.log('email', email);
+        const password = document.getElementById('password').value;
+        const age = document.getElementById('age').value;
+        const address = document.getElementById('address').value;
+
+        if (!email && !password && !age && !address && !username) {
+            return alert('username, email, age, address and password are required!');
+        }
+        if (!username) {
+            return alert('username is required!');
+        }
+        
+        if (!email) {
+            return alert('email is required!');
+        }
+        if (!password) {
+            return alert('password is required!');
+        }
+        if (!age) {
+            return alert('age is required!');
+        }
+        if (!address) {
+            return alert('address is required!');
+        }
+
+        try {
+            var formData = new FormData();
+            formData.append('username', username);
+            formData.append('email', email);
+            formData.append('password', password);
+            formData.append('age', age);
+            formData.append('address', address);
+            
+            // Make AJAX request
+            const response = await fetch('http://localhost:4000/signup', {
+                method: 'POST',
+                body: formData,
+            })
+            const data = await response.json();
+            if(data.success){
+              localStorage.setItem('token',data.token)
+              setTimeout(function() {
+                window.location.href = 'dashboard.html';
+              }, 2000); 
+            }else{
+              alert(data.message);
+              localStorage.setItem('token','')
+            }
+        } catch (error) {
+            console.log('something went wrong');
+        }
+    } 
+    
+
+    </script>

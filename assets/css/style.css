@@ -1,0 +1,101 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url(../img/bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+form {
+  background-color: transparent;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  color:#fff;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: none;
+  color: #000;
+  border-radius: 50px;
+  padding: 8px 25px;
+}
+
+  input:focus{
+border: #25252d;
+  }
+
+button {
+  width: 100%;
+  border-radius: 50px;
+  padding: 10px 30px !important;
+  white-space: nowrap;
+  transition: 0.5s;
+  font-size: 14px;
+  display: inline-block !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  border: none;
+  min-width: 160px;
+  background-color: #3e6e4b;
+  color: #fff;
+}
+
+button:hover {
+  background-color: #89b061;
+}
+
+h1{
+  color: #fff;
+}
+p{
+  color: #fff;
+}
+
+p a{
+color: #bd3c26;
+text-decoration: none;
+}
+p a:hover{
+  color: #bd3c26;
+  text-decoration: none;
+}
+.sign-up {
+  width: 500px;
+}
+
+form{background: #edb72b;padding: 30px 20px;border-radius: 20px;}
+
+.upload-img{
+  border: 1px solid;
+}
+
+.abcRioButton , .gbutton {
+  height: 36px!important;
+   width: 100%!important; 
+   border-radius: 80px!important; 
+   text-align: left!important; 
+  }
+
+
+
+.demo{position: relative; width: 100%; display: block; text-align: center;}
+.demo:before{
+    content: "OR";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
